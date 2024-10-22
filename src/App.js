@@ -5,6 +5,7 @@ import "./App.css";
 const App = () => {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [userDetailMap, setUserDetailMap] = useState({});
     const [error, setError] = useState(null);
     const [groupBy, setGroupBy] = useState(() => {
         return localStorage.getItem('groupBy') || 'status';
@@ -77,7 +78,13 @@ const App = () => {
         
         return groupedTickets; // Return grouped and sorted tickets
     };
-    
+    const createUserIdToNameMap = (users) => {
+        console.log("users",users)
+        return users.reduce((map, user) => {
+            map[user.id] = user.name; // Map user ID to user name
+            return map;
+        }, {});
+    };
 
     
  
@@ -94,6 +101,7 @@ const App = () => {
 
             // Rearrange and set tasks
             setTasks(reArrangeTicketList(groupBy,sortBy, tickets));
+            setUserDetailMap(createUserIdToNameMap(ticketList.users))
             setLoading(false);
         };
         fetchData();
@@ -129,7 +137,7 @@ const App = () => {
             </div>
             <div>
                 <h3>Grouped and Sorted Tickets</h3>
-                <Board tasks={tasks} groupBy={groupBy} sortBy={sortBy} />
+                <Board tasks={tasks} groupBy={groupBy} sortBy={sortBy} userDetailMap={userDetailMap}/>
             </div>
         </div>
     );

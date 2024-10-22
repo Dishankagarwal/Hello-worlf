@@ -1,10 +1,12 @@
-import React from 'react';
-import Card from './Card';  // Ensure the path to Card is correct
+import React from "react";
+import Card from "./Card";
 
 const Column = ({ title, tasks }) => {
   return (
     <div className="column">
-      <h2>{title} {tasks.length}</h2>
+      <h2>
+        {title} {tasks.length}
+      </h2>
 
       <div className="task-list">
         {tasks.map((task) => (

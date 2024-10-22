@@ -7,6 +7,7 @@ const Card = ({ task }) => {
       <h3>{task.title}</h3>
       <p>{task.description}</p>
       <span>{task.type}</span>
+      <span>{task.priority}</span>
     </div>
   );
 };

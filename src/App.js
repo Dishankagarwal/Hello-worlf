@@ -24,23 +24,41 @@ const App = () => {
     };
 
     // Function to rearrange the ticket list (e.g., by status)
-    const reArrangeTicketList = (parameter, data) => {
+    const reArrangeTicketList = (groupByParameter, sortByParameter, data) => {
+        // Warn if data is not an array
+    
         const groupedTickets = data.reduce((acc, ticket) => {
-            // Initialize the array for the status if it doesn't exist
-            if (!acc[ticket.status]) {
-              acc[ticket.status] = [];
+            // Initialize the array for the group parameter if it doesn't exist
+            if (!acc[ticket[groupByParameter]]) {
+                acc[ticket[groupByParameter]] = [];
             }
-            // Push the ticket into the appropriate status array
-            acc[ticket.status].push(ticket);
+            // Push the ticket into the appropriate group array
+            acc[ticket[groupByParameter]].push(ticket);
             return acc;
-          }, {});
-          
-          // Output the grouped tickets
-          console.log(groupedTickets);
-
-        console.warn('Data is not an array:', data);  // Warn if data is not an array
-        return groupedTickets;  // Return data as is if not an array
+        }, {});
+    
+        // Sort the tickets within each group
+        Object.keys(groupedTickets).forEach(key => {
+            groupedTickets[key].sort((a, b) => {
+                if (sortByParameter === 'priority') {
+                    return b.priority - a.priority; // Ascending order
+                } else if (sortByParameter === 'title') {
+                    return a.title.localeCompare(b.title); // Alphabetical order
+                }
+                // Add more sorting conditions as needed
+                return 0; // No sorting if no valid sort parameter is found
+            });
+        });
+    
+        // Output the grouped and sorted tickets
+        console.log(groupedTickets);
+        return groupedTickets; // Return grouped and sorted tickets
     };
+    
+
+    
+ 
+    
 
     // Fetch and set tasks
     useEffect(() => {
@@ -52,7 +70,7 @@ const App = () => {
             const tickets = Array.isArray(ticketList) ? ticketList : ticketList.tickets || [];
 
             // Rearrange and set tasks
-            setTasks(reArrangeTicketList("status", tickets));
+            setTasks(reArrangeTicketList("status",'priority', tickets));
             setLoading(false);
         };
         fetchData();

@@ -104,6 +104,7 @@ const App = () => {
                     <select value={groupBy} onChange={handleGroupByChange}>
                         <option value="status">Status</option>
                         <option value="userId">User ID</option>
+                        <option value="priority">Priority</option>
                     </select>
                 </label>
                 <label>
@@ -116,7 +117,7 @@ const App = () => {
             </div>
             <div>
                 <h3>Grouped and Sorted Tickets</h3>
-                <Board tasks={tasks} />
+                <Board tasks={tasks} groupBy={groupBy} sortBy={sortBy} />
             </div>
         </div>
     );

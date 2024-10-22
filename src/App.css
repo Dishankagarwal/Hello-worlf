@@ -1,5 +1,40 @@
 .App {
   text-align: center;
+  overflow: hidden; /* To avoid body scrolling if App overflows */
+}
+
+.board {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  width: 100vw; /* Allow horizontal scrolling based on screen width */
+  height: 100vh; /* Allow vertical scrolling */
+  overflow: auto; /* Enables both horizontal and vertical scrolling */
+}
+
+.column {
+  min-width: 20%; /* Adjusted width to support responsive layout */
+  max-width: 40%; /* Max width to prevent overflow */
+  background-color: #f5f5f5;
+  padding: 10px;
+  margin-right: 20px;
+  border-radius: 8px;
+}
+
+.task-list {
+  margin-top: 10px;
+}
+
+.card {
+  background-color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.type {
+  color: gray;
 }
 
 .App-logo {

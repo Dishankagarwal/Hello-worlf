@@ -4,6 +4,8 @@ import { ReactComponent as InProgress } from '../icons/inprogress.svg';
 import { ReactComponent as Done } from '../icons/Done.svg';
 import { ReactComponent as Backlog } from '../icons/Backlog.svg';
 
+import LetterIcon from "./LetterIcon";
+
 
 const Card = ({ task }) => {
   const getStatusIcon = (status) => {
@@ -23,7 +25,7 @@ const Card = ({ task }) => {
 
   return (
     <div className="card">
-      <p>{task.id}</p>
+      <p style={{display: "flex", justifyContent: "space-between"}}>{task.id} <LetterIcon letter={task.title.charAt(0)} /></p>
       <span>{getStatusIcon(task.status)} {task.title}</span>
       <h5>{task.description}</h5>
       <span>{task.type}</span>

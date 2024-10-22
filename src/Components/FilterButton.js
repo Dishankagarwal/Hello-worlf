@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ReactComponent as Display } from '../icons/Display.svg'; // You can install react-icons if you haven't already
-import { ReactComponent as Down } from '../icons/down.svg'; // You can install react-icons if you haven't already
+import { ReactComponent as Display } from '../icons/Display.svg'; 
+import { ReactComponent as Down } from '../icons/down.svg'; 
 
 const FilterButton = ({
   groupByValue,

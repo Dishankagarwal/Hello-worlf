@@ -105,8 +105,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <h2>Ticket Manager</h2>
-      <div>
+      
+      <div className="header">
         <label>
           Group By:
           <select value={groupBy} onChange={handleGroupByChange}>
@@ -124,7 +124,7 @@ const App = () => {
         </label>
       </div>
       <div>
-        <h3>Grouped and Sorted Tickets</h3>
+        
         <Board
           tasks={tasks}
           groupBy={groupBy}

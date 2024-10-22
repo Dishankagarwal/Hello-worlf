@@ -6,7 +6,16 @@ const App = () => {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [groupBy, setGroupBy] = useState('status'); // Default group by 'status'
+    const [sortBy, setSortBy] = useState('priority'); // Default sort by 'priority'
 
+    const handleGroupByChange = (event) => {
+        setGroupBy(event.target.value);
+    };
+
+    const handleSortByChange = (event) => {
+        setSortBy(event.target.value);
+    };
     // Function to fetch the ticket list
     const getTicketList = async () => {
         try {
@@ -36,6 +45,7 @@ const App = () => {
             acc[ticket[groupByParameter]].push(ticket);
             return acc;
         }, {});
+        
     
         // Sort the tickets within each group
         Object.keys(groupedTickets).forEach(key => {
@@ -43,6 +53,7 @@ const App = () => {
                 if (sortByParameter === 'priority') {
                     return b.priority - a.priority; // Ascending order
                 } else if (sortByParameter === 'title') {
+                    console.log("title",a.title,b.title)
                     return a.title.localeCompare(b.title); // Alphabetical order
                 }
                 // Add more sorting conditions as needed
@@ -51,7 +62,7 @@ const App = () => {
         });
     
         // Output the grouped and sorted tickets
-        console.log(groupedTickets);
+        
         return groupedTickets; // Return grouped and sorted tickets
     };
     
@@ -70,11 +81,11 @@ const App = () => {
             const tickets = Array.isArray(ticketList) ? ticketList : ticketList.tickets || [];
 
             // Rearrange and set tasks
-            setTasks(reArrangeTicketList("status",'priority', tickets));
+            setTasks(reArrangeTicketList(groupBy,sortBy, tickets));
             setLoading(false);
         };
         fetchData();
-    }, []); // Empty dependency array ensures this runs once when component mounts
+    }, [groupBy,sortBy]); // Empty dependency array ensures this runs once when component mounts
 
     if (loading) {
         return <div>Loading...</div>;
@@ -86,8 +97,27 @@ const App = () => {
 
     return (
         <div className="App">
-            {/* Pass the tasks state as a prop to the Board component */}
-            <Board tasks={tasks} />
+            <h2>Ticket Manager</h2>
+            <div>
+                <label>
+                    Group By:
+                    <select value={groupBy} onChange={handleGroupByChange}>
+                        <option value="status">Status</option>
+                        <option value="userId">User ID</option>
+                    </select>
+                </label>
+                <label>
+                    Sort By:
+                    <select value={sortBy} onChange={handleSortByChange}>
+                        <option value="priority">Priority</option>
+                        <option value="title">Title</option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <h3>Grouped and Sorted Tickets</h3>
+                <Board tasks={tasks} />
+            </div>
         </div>
     );
 };

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Components/Board";
+import FilterButton from './Components/FilterButton';
+
 import "./App.css";
 
 const App = () => {
@@ -105,26 +107,16 @@ const App = () => {
 
   return (
     <div className="App">
-      
       <div className="header">
-        <label>
-          Group By:
-          <select value={groupBy} onChange={handleGroupByChange}>
-            <option value="status">Status</option>
-            <option value="userId">User ID</option>
-            <option value="priority">Priority</option>
-          </select>
-        </label>
-        <label>
-          Sort By:
-          <select value={sortBy} onChange={handleSortByChange}>
-            <option value="priority">Priority</option>
-            <option value="title">Title</option>
-          </select>
-        </label>
+        <FilterButton
+          groupByValue={groupBy}
+          sortByValue={sortBy}
+          handleGroupByChange={handleGroupByChange}
+          handleSortByChange={handleSortByChange}
+        />
       </div>
       <div>
-        
+
         <Board
           tasks={tasks}
           groupBy={groupBy}

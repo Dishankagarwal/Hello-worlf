@@ -6,8 +6,20 @@ const App = () => {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [groupBy, setGroupBy] = useState('status'); // Default group by 'status'
-    const [sortBy, setSortBy] = useState('priority'); // Default sort by 'priority'
+    const [groupBy, setGroupBy] = useState(() => {
+        return localStorage.getItem('groupBy') || 'status';
+    });
+    const [sortBy, setSortBy] = useState(() => {
+        return localStorage.getItem('sortBy') || 'priority';
+    });
+    useEffect(() => {
+        localStorage.setItem('groupBy', groupBy);
+    }, [groupBy]);
+
+    useEffect(() => {
+        localStorage.setItem('sortBy', sortBy);
+    }, [sortBy]);
+
 
     const handleGroupByChange = (event) => {
         setGroupBy(event.target.value);
